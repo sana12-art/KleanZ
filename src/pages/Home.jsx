@@ -4,6 +4,9 @@ import HeroSection from '../components/landing/HeroSection';
 import StorySection from '../components/landing/StorySection';
 import ValuesSection from '../components/landing/ValuesSection';
 import ServicesSection from '../components/landing/ServicesSection';
+import WhyUsSection from '../components/landing/WhyUsSection';
+import TestimonialsSection from '../components/landing/TestimonialsSection';
+import BookingSection from '../components/landing/BookingSection';
 import ClientsSection from '../components/landing/ClientsSection';
 import ContactSection from '../components/landing/ContactSection';
 import Footer from '../components/landing/Footer';
@@ -27,6 +30,9 @@ export default function Home() {
       <StorySection />
       <ValuesSection />
       <ServicesSection images={{ desk: IMAGES.desk, living: IMAGES.living, conference: IMAGES.conference, bathroom: IMAGES.bathroom, team: IMAGES.team, equipment: IMAGES.equipment, specialist: IMAGES.specialist }} />
+      <WhyUsSection />
+      <TestimonialsSection />
+      <BookingSection />
       <ClientsSection />
       <ContactSection />
       <Footer />
