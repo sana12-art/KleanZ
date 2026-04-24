@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Home, HardHat, Sparkles, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import { Building2, Home, HardHat, Sparkles, Users } from 'lucide-react';
 import PriceCalculator from './PriceCalculator';
 
 const fadeUp = {
@@ -15,48 +15,43 @@ export default function ServicesSection({ images }) {
       title: 'Nettoyage de Bureaux',
       desc: 'Entretien régulier ou ponctuel de vos espaces professionnels. Des locaux impeccables pour une productivité maximale.',
       image: images.desk,
-      color: 'from-primary/10 to-primary/5',
     },
     {
       icon: Home,
       title: 'Nettoyage Résidentiel',
       desc: 'Prenez soin de votre intérieur avec un service sur mesure. Nous traitons chaque espace comme si c\'était le nôtre.',
       image: images.living,
-      color: 'from-accent/10 to-accent/5',
     },
     {
       icon: HardHat,
       title: 'Post-Chantier',
       desc: 'Remise en état complète après travaux. Dépoussiérage, lessivage et polissage pour un résultat clé en main.',
       image: images.conference,
-      color: 'from-primary/10 to-primary/5',
     },
     {
       icon: Sparkles,
       title: 'Nettoyage Spécialisé',
       desc: 'Vitrerie, moquettes, espaces médicaux… Des interventions techniques pointues avec le savoir-faire d\'experts certifiés.',
       image: images.bathroom,
-      color: 'from-accent/10 to-accent/5',
     },
     {
       icon: Users,
       title: 'Équipe Professionnelle',
       desc: 'Une équipe formée, équipée et engagée. Nous intervenons avec rigueur et discrétion dans tous vos espaces.',
       image: images.team,
-      color: 'from-primary/10 to-primary/5',
     },
     {
       icon: Sparkles,
       title: 'Équipements de Pointe',
       desc: 'Machines professionnelles, produits certifiés et techniques avancées pour un résultat impeccable garanti.',
       image: images.equipment,
-      color: 'from-accent/10 to-accent/5',
     },
   ];
 
   return (
     <section id="services" className="py-28 lg:py-36 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -64,16 +59,31 @@ export default function ServicesSection({ images }) {
           viewport={{ once: true, margin: '-100px' }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <motion.div variants={fadeUp} custom={0} className="flex items-center justify-center gap-3 mb-4">
+          <motion.div
+            variants={fadeUp}
+            custom={0}
+            className="flex items-center justify-center gap-3 mb-4"
+          >
             <div className="h-px w-8 bg-accent" />
-            <span className="text-accent font-semibold text-sm tracking-widest uppercase font-body">Nos Services</span>
+            <span className="text-accent font-semibold text-sm tracking-widest uppercase font-body">
+              Nos Services
+            </span>
             <div className="h-px w-8 bg-accent" />
           </motion.div>
-          <motion.h2 variants={fadeUp} custom={1} className="font-heading font-extrabold text-4xl md:text-5xl text-foreground leading-tight">
-            NOUS SIMPLIFIONS<br />
-            <span className="text-primary">LE NETTOYAGE.</span>
+
+          <motion.h2
+            variants={fadeUp}
+            custom={1}
+            className="font-heading font-extrabold text-4xl md:text-5xl text-foreground leading-tight whitespace-nowrap"
+          >
+            Nous simplifions <span className="text-primary">le nettoyage.</span>
           </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-muted-foreground text-lg mt-4 font-body">
+
+          <motion.p
+            variants={fadeUp}
+            custom={2}
+            className="text-muted-foreground text-lg mt-4 font-body"
+          >
             Des prestations sur mesure pour chaque espace, réalisées par une équipe de confiance.
           </motion.p>
         </motion.div>
@@ -99,18 +109,17 @@ export default function ServicesSection({ images }) {
                   alt={s.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center">
-                    <s.icon className="w-5 h-5 text-white" />
-                  </div>
-                </div>
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="font-heading font-bold text-lg text-foreground mb-2">{s.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed font-body mb-5">{s.desc}</p>
+                <h3 className="font-heading font-bold text-lg text-foreground mb-2">
+                  {s.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed font-body mb-5">
+                  {s.desc}
+                </p>
+
                 <div className="flex gap-3">
                   <a
                     href="#booking"
@@ -146,6 +155,7 @@ export default function ServicesSection({ images }) {
               Notre équipe est prête à écouter vos besoins et à vous proposer une solution sur mesure.
             </p>
           </div>
+
           <a
             href="#contact"
             className="flex-shrink-0 bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-4 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-xl font-body whitespace-nowrap"

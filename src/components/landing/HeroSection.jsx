@@ -103,12 +103,7 @@ export default function HeroSection({ heroImage }) {
             >
               <span className="relative z-10">Demander un Devis Gratuit →</span>
             </a>
-            <a
-              href="#histoire"
-              className="border border-white/25 hover:bg-white/10 text-white px-8 py-4 rounded-full text-base font-medium transition-all duration-300 text-center backdrop-blur-sm"
-            >
-              Notre Histoire
-            </a>
+            
           </motion.div>
         </div>
       </div>

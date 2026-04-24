@@ -46,8 +46,7 @@ export default function ValuesSection() {
             custom={1}
             className="font-heading font-extrabold text-4xl md:text-5xl text-foreground mt-4 leading-tight"
           >
-            Les piliers qui<br />
-            <span className="text-primary">nous guident.</span>
+            Les piliers qui <span className="text-primary">nous guident.</span>
           </motion.h2>
         </motion.div>
 
