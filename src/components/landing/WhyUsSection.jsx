@@ -45,7 +45,7 @@ export default function WhyUsSection() {
             custom={1}
             className="font-heading font-extrabold text-4xl md:text-5xl text-foreground leading-tight whitespace-nowrap"
           >
-            la différence <span className="text-primary">kleanZ.</span>
+            La différence <span className="text-primary">kleanZ.</span>
           </motion.h2>
 
           <motion.p
