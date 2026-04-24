@@ -10,6 +10,7 @@ import BookingSection from '../components/landing/BookingSection';
 import ClientsSection from '../components/landing/ClientsSection';
 import ContactSection from '../components/landing/ContactSection';
 import Footer from '../components/landing/Footer';
+import WhatsAppButton from '../components/landing/WhatsAppButton';
 
 const IMAGES = {
   hero: 'https://media.base44.com/images/public/69e63cfe37163cac729de2ea/3b3423fc4_rocket_gen_img_19d685136-1764681426609.png',
@@ -36,6 +37,7 @@ export default function Home() {
       <ClientsSection />
       <ContactSection />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }

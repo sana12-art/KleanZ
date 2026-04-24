@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, Phone, MapPin, CheckCircle, ChevronLeft, ChevronRight, User, Mail, MessageSquare } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
-import { format, addDays, startOfDay, isSameDay, isBefore } from 'date-fns';
+import { format, addDays, startOfDay, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 const MEETING_TYPES = [
@@ -61,20 +61,21 @@ export default function BookingSection() {
 
     const type = MEETING_TYPES.find(m => m.id === meetingType);
     const dateStr = format(selectedDate, 'EEEE d MMMM yyyy', { locale: fr });
-    const body = `
-Bonjour,
+    const dateISO = format(selectedDate, 'yyyy-MM-dd');
 
-Une nouvelle réservation a été effectuée sur le site KleanZ :
+    // Save to database
+    await base44.entities.Reservation.create({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || '',
+      meeting_type: meetingType,
+      date: dateISO,
+      time_slot: selectedSlot,
+      message: form.message || '',
+      status: 'pending',
+    });
 
-📅 Type : ${type?.label} (${type?.duration})
-🗓 Date : ${dateStr} à ${selectedSlot}
-👤 Nom : ${form.name}
-📧 Email : ${form.email}
-📞 Téléphone : ${form.phone || 'Non renseigné'}
-💬 Message : ${form.message || 'Aucun message'}
-
-Merci de confirmer ce rendez-vous au prospect.
-    `.trim();
+    const body = `Bonjour,\n\nNouvelle réservation sur KleanZ :\n\n📅 Type : ${type?.label} (${type?.duration})\n🗓 Date : ${dateStr} à ${selectedSlot}\n👤 Nom : ${form.name}\n📧 Email : ${form.email}\n📞 Téléphone : ${form.phone || 'Non renseigné'}\n💬 Message : ${form.message || 'Aucun'}\n\nMerci de confirmer ce rendez-vous.`;
 
     await Promise.all([
       base44.integrations.Core.SendEmail({

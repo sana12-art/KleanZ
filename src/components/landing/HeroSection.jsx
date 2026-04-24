@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Star, CheckCircle } from 'lucide-react';
-
 const stats = [
   { value: '60+', label: 'Clients B2B' },
   { value: '6 ans', label: 'D\'expérience' },
@@ -37,7 +36,7 @@ export default function HeroSection({ heroImage }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-24 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-28 pb-32 md:pb-32 lg:pb-32 w-full">
         <div className="max-w-3xl">
           {/* Trust badge */}
           <motion.div
@@ -123,11 +122,11 @@ export default function HeroSection({ heroImage }) {
       >
         <div className="bg-white/10 backdrop-blur-xl border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+            <div className="grid grid-cols-4 divide-x divide-white/10">
               {stats.map((s) => (
-                <div key={s.label} className="py-5 px-6 text-center">
-                  <div className="font-heading font-extrabold text-2xl text-accent">{s.value}</div>
-                  <div className="text-white/60 text-xs font-body mt-0.5">{s.label}</div>
+                <div key={s.label} className="flex flex-col items-center py-2.5 px-2">
+                  <span className="font-heading font-extrabold text-sm md:text-lg text-accent leading-tight">{s.value}</span>
+                  <span className="text-white/60 text-[10px] md:text-xs font-body text-center leading-tight mt-0.5">{s.label}</span>
                 </div>
               ))}
             </div>

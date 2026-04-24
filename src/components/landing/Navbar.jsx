@@ -5,10 +5,14 @@ import logo from "@/assets/logo kleanz.png";
 
 const navLinks = [
   { label: 'Accueil', href: '#hero' },
-  { label: 'Notre Histoire', href: '#histoire' },
-  { label: 'Nos Valeurs', href: '#valeurs' },
+  {
+    label: 'À propos de nous',
+    dropdown: [
+      { label: 'Notre histoire', href: '#histoire' },
+      { label: 'Nos valeurs', href: '#valeurs' },
+    ],
+  },
   { label: 'Services', href: '#services' },
-  { label: 'Nos Clients', href: '#clients' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -28,6 +32,7 @@ export default function Navbar() {
         scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2">
             <KleanZLogo dark={scrolled} />
@@ -35,17 +40,36 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map(link => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:text-accent ${
-                  scrolled ? 'text-foreground' : 'text-white'
-                }`}
-              >
-                {link.label}
-              </a>
+            {navLinks.map((link, index) => (
+              <div key={index} className="relative group">
+
+                <a
+                  href={link.href || "#"}
+                  className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:text-accent ${
+                    scrolled ? 'text-foreground' : 'text-white'
+                  }`}
+                >
+                  {link.label}
+                </a>
+
+                {/* Dropdown */}
+                {link.dropdown && (
+                  <div className="absolute top-full left-0 mt-3 w-52 bg-white rounded-xl shadow-lg opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
+                    {link.dropdown.map((item, i) => (
+                      <a
+                        key={i}
+                        href={item.href}
+                        className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+
+              </div>
             ))}
+
             <a
               href="#contact"
               className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:shadow-lg"
@@ -61,6 +85,7 @@ export default function Navbar() {
           >
             <Menu className="w-6 h-6" />
           </button>
+
         </div>
       </nav>
 
@@ -73,34 +98,57 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-primary/95 backdrop-blur-2xl flex flex-col items-center justify-center"
           >
+
             <button
               onClick={() => setMobileOpen(false)}
               className="absolute top-6 right-6 text-white p-2"
             >
               <X className="w-7 h-7" />
             </button>
-            <div className="flex flex-col items-center gap-8">
+
+            <div className="flex flex-col items-center gap-6">
+
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0, transition: { delay: i * 0.07 } }}
-                  className="text-white text-2xl font-heading font-bold tracking-wide"
-                >
-                  {link.label}
-                </motion.a>
+                <div key={i} className="flex flex-col items-center">
+
+                  {/* Lien principal */}
+                  <motion.a
+                    href={link.href || "#"}
+                    onClick={() => setMobileOpen(false)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: i * 0.07 } }}
+                    className="text-white text-2xl font-bold"
+                  >
+                    {link.label}
+                  </motion.a>
+
+                  {/* Dropdown mobile */}
+                  {link.dropdown && (
+                    <div className="mt-2 flex flex-col gap-2">
+                      {link.dropdown.map((item, j) => (
+                        <a
+                          key={j}
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="text-gray-300 text-lg"
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+
+                </div>
               ))}
+
               <motion.a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: 0.5 } }}
                 className="mt-4 bg-accent text-accent-foreground px-8 py-3 rounded-full text-lg font-bold"
               >
                 Devis Gratuit
               </motion.a>
+
             </div>
           </motion.div>
         )}

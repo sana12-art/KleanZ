@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, Phone, Mail, MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { base44 } from '@/api/base44Client';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -14,19 +15,34 @@ const fadeUp = {
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    // Simulate sending
-    await new Promise(r => setTimeout(r, 1500));
-    toast.success('Votre demande a été envoyée ! Nous vous recontactons rapidement.');
-    setForm({ name: '', email: '', phone: '', message: '' });
+
+    const body = `Bonjour équipe KleanZ,\n\nNouvelle demande de devis :\n\n👤 Nom : ${form.name}\n📧 Email : ${form.email}\n📞 Téléphone : ${form.phone || 'Non renseigné'}\n💬 Message : ${form.message}`;
+
+    await Promise.all([
+      base44.integrations.Core.SendEmail({
+        to: form.email,
+        subject: 'Votre demande de devis KleanZ a bien été reçue',
+        body: `Bonjour ${form.name},\n\nNous avons bien reçu votre demande de devis et nous vous recontacterons sous 24h.\n\nVotre message : "${form.message}"\n\nÀ très bientôt,\nL'équipe KleanZ`,
+      }),
+      base44.integrations.Core.SendEmail({
+        to: 'contact@kleanz.fr',
+        subject: `Nouvelle demande de devis — ${form.name}`,
+        body,
+      }),
+    ]);
+
     setSending(false);
+    setSent(true);
+    toast.success('Votre demande a été envoyée ! Nous vous recontactons sous 24h.');
   };
 
   return (
-    <section id="contact" className="py-28 lg:py-36 bg-background">
+    <section id="contact" className="py-28 lg:py-36 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left - Info */}
@@ -86,7 +102,30 @@ export default function ContactSection() {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
           >
+            <AnimatePresence mode="wait">
+            {sent ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-card rounded-3xl p-10 shadow-xl border border-border flex flex-col items-center justify-center text-center gap-4 min-h-[400px]"
+              >
+                <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle className="w-10 h-10 text-green-500" />
+                </div>
+                <h3 className="font-heading font-extrabold text-2xl text-foreground">Demande envoyée !</h3>
+                <p className="text-muted-foreground font-body max-w-xs">
+                  Merci <strong>{form.name}</strong> ! Votre demande de devis a bien été reçue. Nous vous recontactons sous 24h.
+                </p>
+                <p className="text-muted-foreground text-sm font-body">Un email de confirmation a été envoyé à <strong>{form.email}</strong>.</p>
+                <button onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', message: '' }); }}
+                  className="mt-2 text-accent font-semibold underline text-sm font-body">
+                  Envoyer une nouvelle demande
+                </button>
+              </motion.div>
+            ) : (
             <motion.form
+              key="form"
               variants={fadeUp}
               custom={1}
               onSubmit={handleSubmit}
@@ -152,6 +191,8 @@ export default function ContactSection() {
                 )}
               </Button>
             </motion.form>
+            )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
