@@ -1,0 +1,52 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Titre de l'article"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug de l'article"
+    },
+    "excerpt": {
+      "type": "string",
+      "description": "R\u00e9sum\u00e9 court de l'article"
+    },
+    "content": {
+      "type": "string",
+      "description": "Contenu complet de l'article (HTML ou texte)"
+    },
+    "cover_image": {
+      "type": "string",
+      "description": "URL de l'image de couverture"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Conseils",
+        "Actualit\u00e9s",
+        "Bien-\u00eatre",
+        "Entreprise",
+        "\u00c9cologie"
+      ],
+      "default": "Conseils",
+      "description": "Cat\u00e9gorie de l'article"
+    },
+    "published": {
+      "type": "boolean",
+      "default": false,
+      "description": "Article publi\u00e9 ou brouillon"
+    },
+    "read_time": {
+      "type": "number",
+      "description": "Temps de lecture estim\u00e9 en minutes"
+    }
+  },
+  "required": [
+    "title",
+    "excerpt",
+    "content"
+  ]
+}

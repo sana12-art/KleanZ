@@ -32,7 +32,7 @@ export default function Footer() {
               Navigation
             </h4>
             <div className="space-y-3">
-              {['Accueil', 'Notre Histoire', 'Nos Valeurs', 'Services', 'Nos Clients', 'Contact'].map(link => (
+              {['Accueil', 'Notre Histoire', 'Services', 'Nos Clients', 'Contact'].map(link => (
                 <a
                   key={link}
                   href={`#${link === 'Accueil' ? 'hero' : link === 'Notre Histoire' ? 'histoire' : link === 'Nos Valeurs' ? 'valeurs' : link === 'Nos Clients' ? 'clients' : link.toLowerCase()}`}

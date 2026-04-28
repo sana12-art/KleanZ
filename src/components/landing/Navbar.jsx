@@ -9,12 +9,15 @@ const navLinks = [
     label: 'À propos de nous',
     dropdown: [
       { label: 'Notre histoire', href: '#histoire' },
-      { label: 'Nos valeurs', href: '#valeurs' },
+      { label: 'Nos Clients', href: '#clients' },
     ],
   },
   { label: 'Services', href: '#services' },
+  { label: 'Rendez-vous', href: '#booking' },
+  { label: 'Blog', href: '/blog', isLink: true },
   { label: 'Contact', href: '#contact' },
 ];
+
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);

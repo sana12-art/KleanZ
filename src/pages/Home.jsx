@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/landing/Navbar';
 import HeroSection from '../components/landing/HeroSection';
 import StorySection from '../components/landing/StorySection';
-import ValuesSection from '../components/landing/ValuesSection';
+import HowItWorksSection from '../components/landing/HowItWorksSection';
 import ServicesSection from '../components/landing/ServicesSection';
 import WhyUsSection from '../components/landing/WhyUsSection';
 import TestimonialsSection from '../components/landing/TestimonialsSection';
@@ -29,7 +29,7 @@ export default function Home() {
       <Navbar />
       <HeroSection heroImage={IMAGES.hero} />
       <StorySection />
-      <ValuesSection />
+      <HowItWorksSection />
       <ServicesSection images={{ desk: IMAGES.desk, living: IMAGES.living, conference: IMAGES.conference, bathroom: IMAGES.bathroom, team: IMAGES.team, equipment: IMAGES.equipment, specialist: IMAGES.specialist }} />
       <WhyUsSection />
       <TestimonialsSection />

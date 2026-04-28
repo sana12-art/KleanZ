@@ -1,25 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// Selected notable clients only
-const clients = [
-  'Institut de France',
-  'OpenClassrooms',
-  'Hôpital Saint-Maurice',
-  'Fondation Entreprendre',
-  'Century 21',
-  'Opticien Afflelou',
-  'Muslim Hands',
-  'France Langue',
-  'Dental Monitoring',
-  'Fondation Simone et Cino Del Duca',
-  'Club de Rugby de Vincennes',
-  'RESAH',
+const featuredClients = [
+  {
+    name: 'Institut de France',
+    logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/b/b8/Institut_de_France.svg/320px-Institut_de_France.svg.png',
+  },
+  {
+    name: 'OpenClassrooms',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/OpenClassrooms_logo.svg/320px-OpenClassrooms_logo.svg.png',
+  },
+  {
+    name: 'Century 21',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Century_21_seal.svg/320px-Century_21_seal.svg.png',
+  },
+  {
+    name: 'France Langue',
+    logo: 'https://www.france-langue.fr/wp-content/themes/france-langue/img/logo-france-langue.png',
+  },
 ];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.1 } })
+  visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.1 } }),
 };
 
 export default function ClientsSection() {
@@ -43,21 +46,30 @@ export default function ClientsSection() {
           </motion.p>
         </motion.div>
 
-        {/* Grid of selected clients */}
+        {/* 4 Featured Logos */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10"
         >
-          {clients.map((name, i) => (
+          {featuredClients.map((client, i) => (
             <motion.div
-              key={name}
+              key={client.name}
               variants={fadeUp}
               custom={i}
-              className="bg-card rounded-2xl border border-border px-6 py-5 flex items-center justify-center text-center hover:border-accent/40 hover:shadow-md transition-all duration-300"
+              className="bg-card rounded-2xl border border-border p-8 flex items-center justify-center hover:shadow-md hover:border-accent/30 transition-all duration-300 group"
             >
-              <span className="text-sm font-semibold text-foreground font-body leading-snug">{name}</span>
+              <img
+                src={client.logo}
+                alt={client.name}
+                className="max-h-12 max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'block';
+                }}
+              />
+              <span className="hidden text-sm font-semibold text-foreground font-body text-center">{client.name}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -67,9 +79,9 @@ export default function ClientsSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-center text-muted-foreground text-sm font-body mt-8"
+          className="text-center text-muted-foreground text-sm font-body"
         >
-          Et bien d'autres entreprises, associations et institutions…
+          Et bien d'autres entreprises, associations et institutions en Île-de-France…
         </motion.p>
       </div>
     </section>
