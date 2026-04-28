@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from "@/assets/logo kleanz.png";
 
 export default function Footer() {
   return (
@@ -16,7 +15,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <img
-              src={logo}
+              src="https://media.base44.com/images/public/69e63cfe37163cac729de2ea/de9593a4c_WhatsAppImage2026-04-20at170302.jpeg"
               alt="kleanZ"
               className="h-12 w-auto rounded-lg"
             />
@@ -32,10 +31,10 @@ export default function Footer() {
               Navigation
             </h4>
             <div className="space-y-3">
-              {['Accueil', 'Notre Histoire', 'Services', 'Nos Clients', 'Contact'].map(link => (
+              {['Accueil', 'Notre Histoire', 'Nos Valeurs', 'Services', 'Nos Clients', 'Blog', 'Contact'].map(link => (
                 <a
                   key={link}
-                  href={`#${link === 'Accueil' ? 'hero' : link === 'Notre Histoire' ? 'histoire' : link === 'Nos Valeurs' ? 'valeurs' : link === 'Nos Clients' ? 'clients' : link.toLowerCase()}`}
+                  href={link === 'Blog' ? '/blog' : link === 'Notre Histoire' ? '/notre-histoire' : link === 'Nos Valeurs' ? '/nos-valeurs' : `#${link === 'Accueil' ? 'hero' : link === 'Nos Clients' ? 'clients' : link.toLowerCase()}`}
                   className="block text-primary-foreground/70 hover:text-accent transition-colors text-sm font-body"
                 >
                   {link}
