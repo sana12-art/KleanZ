@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from "@/assets/logo kleanz.png";
+import logo from "@/assets/logo soservice.png";
 
 const navLinks = [
   { label: 'Accueil', href: '#hero' },
@@ -32,13 +32,13 @@ export default function Navbar() {
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm' : 'bg-transparent'
+scrolled ? 'bg-background/95 backdrop-blur-xl shadow-sm border-b border-border' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
 
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2">
-            <KleanZLogo dark={scrolled} />
+            <SoserviceLogo dark={scrolled} />
           </a>
 
           {/* Desktop Nav */}
@@ -160,14 +160,13 @@ export default function Navbar() {
   );
 }
 
-function KleanZLogo({ dark }) {
+function SoserviceLogo({ dark }) {
   return (
     <img
       src={logo}
-      alt="kleanZ"
-      className={`h-20 w-auto transition ${
-        dark ? "" : "brightness-0 invert"
-      }`}
+      alt="soservice"
+      className="h-20 w-auto transition"
+
     />
   );
 }
