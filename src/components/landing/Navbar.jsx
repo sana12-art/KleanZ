@@ -32,7 +32,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-scrolled ? 'bg-background/95 backdrop-blur-xl shadow-sm border-b border-border' : 'bg-transparent'
+scrolled ? 'bg-slate-100/90 backdrop-blur-xl shadow-xl border-b border-slate-200' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
 
@@ -165,8 +165,7 @@ function SoserviceLogo({ dark }) {
     <img
       src={logo}
       alt="soservice"
-      className="h-20 w-auto transition"
-
+      className={`h-20 w-auto transition ${dark ? 'drop-shadow-lg' : ''}`}
     />
   );
 }
