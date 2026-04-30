@@ -7,7 +7,7 @@ import { format, addDays, startOfDay, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 const MEETING_TYPES = [
-  { id: 'visite', label: 'Visite technique', desc: 'Un expert se déplace chez vous pour évaluer vos besoins', duration: '45 min', icon: MapPin },
+  { id: 'visite', label: 'Visite technique', desc: 'Un client se déplace chez l\'expert pour évaluer vos besoins', duration: '45 min', icon: MapPin },
   { id: 'appel', label: 'Appel de découverte', desc: 'Échangez avec notre équipe pour définir votre projet', duration: '20 min', icon: Phone },
 ];
 

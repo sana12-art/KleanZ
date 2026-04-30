@@ -13,7 +13,7 @@ const fadeUp = {
 };
 
 export default function ContactSection() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', address: '', postalCode: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
@@ -21,17 +21,18 @@ export default function ContactSection() {
     e.preventDefault();
     setSending(true);
 
-    const body = `Bonjour équipe KleanZ,\n\nNouvelle demande de devis :\n\n👤 Nom : ${form.name}\n📧 Email : ${form.email}\n📞 Téléphone : ${form.phone || 'Non renseigné'}\n💬 Message : ${form.message}`;
+    const fullName = `${form.firstName} ${form.lastName}`.trim();
+    const body = `Bonjour équipe KleanZ,\n\nNouvelle demande de devis :\n\n👤 Nom : ${fullName}\n📞 Téléphone : ${form.phone || 'Non renseigné'}\n📍 Adresse : ${form.address || 'Non renseignée'}\n🏠 Code postal : ${form.postalCode || 'Non renseigné'}\n📧 Email : ${form.email}\n💬 Message : ${form.message}`;
 
     await Promise.all([
       base44.integrations.Core.SendEmail({
         to: form.email,
         subject: 'Votre demande de devis KleanZ a bien été reçue',
-        body: `Bonjour ${form.name},\n\nNous avons bien reçu votre demande de devis et nous vous recontacterons sous 24h.\n\nVotre message : "${form.message}"\n\nÀ très bientôt,\nL'équipe KleanZ`,
+        body: `Bonjour ${fullName},\n\nNous avons bien reçu votre demande de devis et nous vous recontacterons sous 24h.\n\nVotre message : "${form.message}"\n\nÀ très bientôt,\nL'équipe KleanZ`,
       }),
       base44.integrations.Core.SendEmail({
         to: 'contact@kleanz.fr',
-        subject: `Nouvelle demande de devis — ${form.name}`,
+        subject: `Nouvelle demande de devis — ${fullName}`,
         body,
       }),
     ]);
@@ -115,10 +116,10 @@ export default function ContactSection() {
                 </div>
                 <h3 className="font-heading font-extrabold text-2xl text-foreground">Demande envoyée !</h3>
                 <p className="text-muted-foreground font-body max-w-xs">
-                  Merci <strong>{form.name}</strong> ! Votre demande de devis a bien été reçue. Nous vous recontactons sous 24h.
+                  Merci <strong>{`${form.firstName} ${form.lastName}`.trim()}</strong> ! Votre demande de devis a bien été reçue. Nous vous recontactons sous 24h.
                 </p>
                 <p className="text-muted-foreground text-sm font-body">Un email de confirmation a été envoyé à <strong>{form.email}</strong>.</p>
-                <button onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', message: '' }); }}
+                <button onClick={() => { setSent(false); setForm({ firstName: '', lastName: '', phone: '', address: '', postalCode: '', email: '', message: '' }); }}
                   className="mt-2 text-accent font-semibold underline text-sm font-body">
                   Envoyer une nouvelle demande
                 </button>
@@ -133,35 +134,68 @@ export default function ContactSection() {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block font-body">Nom complet</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block font-body">Prénom</label>
                   <Input
-                    value={form.name}
-                    onChange={e => setForm({ ...form, name: e.target.value })}
-                    placeholder="Jean Dupont"
+                    value={form.firstName}
+                    onChange={e => setForm({ ...form, firstName: e.target.value })}
+                    placeholder="Jean"
                     required
                     className="h-12 rounded-xl"
                   />
                 </div>
                 <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block font-body">Nom</label>
+                  <Input
+                    value={form.lastName}
+                    onChange={e => setForm({ ...form, lastName: e.target.value })}
+                    placeholder="Dupont"
+                    required
+                    className="h-12 rounded-xl"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
                   <label className="text-sm font-medium text-foreground mb-2 block font-body">Téléphone</label>
                   <Input
+                    type="tel"
                     value={form.phone}
                     onChange={e => setForm({ ...form, phone: e.target.value })}
                     placeholder="06 XX XX XX XX"
                     className="h-12 rounded-xl"
                   />
                 </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block font-body">Email</label>
+                  <Input
+                    type="email"
+                    value={form.email}
+                    onChange={e => setForm({ ...form, email: e.target.value })}
+                    placeholder="jean@exemple.fr"
+                    required
+                    className="h-12 rounded-xl"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block font-body">Email</label>
-                <Input
-                  type="email"
-                  value={form.email}
-                  onChange={e => setForm({ ...form, email: e.target.value })}
-                  placeholder="jean@exemple.fr"
-                  required
-                  className="h-12 rounded-xl"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block font-body">Adresse</label>
+                  <Input
+                    value={form.address}
+                    onChange={e => setForm({ ...form, address: e.target.value })}
+                    placeholder="123 rue de Paris"
+                    className="h-12 rounded-xl"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block font-body">Code postal</label>
+                  <Input
+                    value={form.postalCode}
+                    onChange={e => setForm({ ...form, postalCode: e.target.value })}
+                    placeholder="75001"
+                    className="h-12 rounded-xl"
+                  />
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-foreground mb-2 block font-body">Décrivez votre besoin</label>
