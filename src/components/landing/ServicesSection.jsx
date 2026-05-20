@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Home, HardHat, Sparkles, Users } from 'lucide-react';
-import PriceCalculator from './PriceCalculator';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -164,7 +163,7 @@ export default function ServicesSection({ images }) {
           </a>
         </motion.div>
 
-        <PriceCalculator />
+        
       </div>
     </section>
   );

@@ -1,4 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+const footerLinks = [
+  { label: 'Accueil', href: '#hero', isAnchor: true },
+  { label: 'Notre Histoire', href: '/notre-histoire', isAnchor: false },
+  { label: 'Nos Valeurs', href: '/nos-valeurs', isAnchor: false },
+  { label: 'Services', href: '#services', isAnchor: true },
+  { label: 'Nos Clients', href: '#clients', isAnchor: true },
+  { label: 'Rendez-vous', href: '#booking', isAnchor: true },
+  { label: 'Blog', href: '/blog', isAnchor: false },
+  { label: 'Contact', href: '#contact', isAnchor: true },
+];
 
 export default function Footer() {
   return (
@@ -15,9 +27,9 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <img
-              src="https://media.base44.com/images/public/69e63cfe37163cac729de2ea/de9593a4c_WhatsAppImage2026-04-20at170302.jpeg"
-              alt="kleanZ"
-              className="h-12 w-auto rounded-lg"
+              src="https://media.base44.com/images/public/69e63cfe37163cac729de2ea/99044bf05_Capture_d_cran_2026-05-18_104616-removebg-preview.png"
+              alt="KleanZ"
+              className="h-16 w-auto"
             />
             <p className="text-primary-foreground/70 mt-4 leading-relaxed font-body text-sm max-w-xs">
               Entreprise familiale de nettoyage professionnel. Depuis 2018, nous prenons soin 
@@ -25,20 +37,35 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation — same links as navbar */}
           <div>
             <h4 className="font-heading font-bold text-sm tracking-widest uppercase mb-6 text-primary-foreground/60">
               Navigation
             </h4>
             <div className="space-y-3">
-              {['Accueil', 'Notre Histoire', 'Nos Valeurs', 'Services', 'Nos Clients', 'Blog', 'Contact'].map(link => (
-                <a
-                  key={link}
-                  href={link === 'Blog' ? '/blog' : link === 'Notre Histoire' ? '/notre-histoire' : link === 'Nos Valeurs' ? '/nos-valeurs' : `#${link === 'Accueil' ? 'hero' : link === 'Nos Clients' ? 'clients' : link.toLowerCase()}`}
-                  className="block text-primary-foreground/70 hover:text-accent transition-colors text-sm font-body"
-                >
-                  {link}
-                </a>
+              {footerLinks.map(link => (
+                link.isAnchor ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.querySelector(link.href);
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="block text-primary-foreground/70 hover:text-accent transition-colors text-sm font-body cursor-pointer"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className="block text-primary-foreground/70 hover:text-accent transition-colors text-sm font-body"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
             </div>
           </div>

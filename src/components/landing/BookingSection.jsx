@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, Phone, MapPin, CheckCircle, ChevronLeft, ChevronRight, User, Mail, MessageSquare } from 'lucide-react';
+import { Calendar, Clock, Phone, MapPin, CheckCircle, ChevronLeft, ChevronRight, User, Mail, MessageSquare, Scan } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 import { format, addDays, startOfDay, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 const MEETING_TYPES = [
-  { id: 'visite', label: 'Visite technique', desc: 'Un client se déplace chez l\'expert pour évaluer vos besoins', duration: '45 min', icon: MapPin },
+  { id: 'visite', label: 'Visite technique', desc: 'Un expert se déplace chez vous pour évaluer vos besoins', duration: '45 min', icon: MapPin },
   { id: 'appel', label: 'Appel de découverte', desc: 'Échangez avec notre équipe pour définir votre projet', duration: '20 min', icon: Phone },
+  { id: 'visite3d', label: 'Visite 3D virtuelle', desc: 'Recevez un lien de visite interactive en 3D de vos espaces après notre passage', duration: '30 min', icon: Scan },
 ];
 
 const TIME_SLOTS = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
@@ -84,7 +85,7 @@ export default function BookingSection() {
         body: `Bonjour ${form.name},\n\nVotre ${type?.label} est bien enregistré pour le ${dateStr} à ${selectedSlot}.\n\nL'équipe KleanZ vous confirmera ce créneau dans les plus brefs délais.\n\nÀ bientôt !`,
       }),
       base44.integrations.Core.SendEmail({
-        to: 'contact@kleanz.fr',
+        to: 'Kleanz.contact@gmail.com',
         subject: `Nouvelle réservation — ${type?.label} · ${dateStr}`,
         body,
       }),
@@ -163,7 +164,7 @@ export default function BookingSection() {
               <motion.div key="step0" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }} className="p-8 md:p-12">
                 <h3 className="font-heading font-bold text-xl text-foreground mb-2">Quel type de rendez-vous souhaitez-vous ?</h3>
                 <p className="text-muted-foreground text-sm font-body mb-8">Choisissez le format le plus adapté à votre besoin.</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
                   {MEETING_TYPES.map(m => (
                     <button key={m.id} onClick={() => setMeetingType(m.id)}
                       className={`group text-left p-7 rounded-2xl border-2 transition-all duration-300 ${

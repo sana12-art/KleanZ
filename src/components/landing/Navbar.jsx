@@ -1,173 +1,178 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from "@/assets/logo kleanz.png";
+import { Link } from 'react-router-dom';
 
 const navLinks = [
   { label: 'Accueil', href: '#hero' },
   {
     label: 'À propos de nous',
     dropdown: [
-      { label: 'Notre histoire', href: '#histoire' },
-      { label: 'Nos Clients', href: '#clients' },
+      { label: 'Notre Histoire', href: '/notre-histoire' },
+      { label: 'Nos Valeurs', href: '/nos-valeurs' },
     ],
   },
   { label: 'Services', href: '#services' },
+  { label: 'Nos Clients', href: '#clients' },
   { label: 'Rendez-vous', href: '#booking' },
   { label: 'Blog', href: '/blog', isLink: true },
   { label: 'Contact', href: '#contact' },
 ];
 
-
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const mainColor = '#727f2d';
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+      {/* NAVBAR */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl shadow-md"
+        style={{ backgroundColor: mainColor }}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-24">
 
-{/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <KleanZLogo dark={scrolled} />
+          {/* LOGO */}
+          <a href="#hero" className="flex items-center">
+            <img
+              src="https://media.base44.com/images/public/69e63cfe37163cac729de2ea/99044bf05_Capture_d_cran_2026-05-18_104616-removebg-preview.png"
+              alt="logo"
+              className="h-28 md:h-32 w-auto"
+            />
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-              <div key={index} className="relative group">
+          {/* DESKTOP MENU */}
+          <div className="hidden lg:flex items-center gap-8 text-white">
 
-                <a
-                  href={link.href || "#"}
-                  className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:text-accent ${
-                    scrolled ? 'text-foreground' : 'text-white'
-                  }`}
+            {navLinks.map((link) =>
+              link.dropdown ? (
+                <div
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
                 >
+                  <button className="flex items-center gap-1 font-semibold hover:text-white/80">
+                    {link.label}
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+
+                  <AnimatePresence>
+                    {dropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className="absolute top-full left-0 mt-3 w-56 bg-white text-black rounded-xl shadow-xl overflow-hidden"
+                      >
+                        {link.dropdown.map((sub) => (
+                          <Link
+                            key={sub.href}
+                            to={sub.href}
+                            className="block px-5 py-3 hover:bg-gray-100"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : link.isLink ? (
+                <Link key={link.href} to={link.href} className="font-semibold">
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={link.href} className="font-semibold">
                   {link.label}
                 </a>
+              )
+            )}
 
-                {/* Dropdown */}
-                {link.dropdown && (
-                  <div className="absolute top-full left-0 mt-3 w-52 bg-white rounded-xl shadow-lg opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    {link.dropdown.map((item, i) => (
-                      <a
-                        key={i}
-                        href={item.href}
-                        className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-
-              </div>
-            ))}
-
+            {/* CTA */}
             <a
               href="#contact"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:shadow-lg"
+              className="bg-white text-[#727f2d] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition"
             >
               Devis Gratuit
             </a>
           </div>
 
-          {/* Mobile Toggle */}
+          {/* MOBILE BUTTON */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={`lg:hidden p-2 ${scrolled ? 'text-foreground' : 'text-white'}`}
+            className="lg:hidden text-white"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-7 h-7" />
           </button>
-
         </div>
       </nav>
 
-      {/* Mobile Overlay */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-primary/95 backdrop-blur-2xl flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[60] flex flex-col items-center justify-center text-white"
+            style={{ backgroundColor: mainColor }}
           >
-
+            {/* CLOSE */}
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 text-white p-2"
+              className="absolute top-6 right-6"
             >
-              <X className="w-7 h-7" />
+              <X className="w-8 h-8" />
             </button>
 
-            <div className="flex flex-col items-center gap-6">
+            {/* LINKS */}
+            <div className="flex flex-col items-center gap-8">
+              {navLinks.map((link) =>
+                link.dropdown ? (
+                  <div key={link.label} className="text-center">
+                    <button
+                      onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                      className="text-2xl font-bold"
+                    >
+                      {link.label}
+                    </button>
 
-              {navLinks.map((link, i) => (
-                <div key={i} className="flex flex-col items-center">
-
-                  {/* Lien principal */}
-                  <motion.a
-                    href={link.href || "#"}
-                    onClick={() => setMobileOpen(false)}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0, transition: { delay: i * 0.07 } }}
-                    className="text-white text-2xl font-bold"
-                  >
+                    {mobileAboutOpen && (
+                      <div className="mt-3 flex flex-col gap-2">
+                        {link.dropdown.map((sub) => (
+                          <Link key={sub.href} to={sub.href}>
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : link.isLink ? (
+                  <Link key={link.href} to={link.href} className="text-2xl font-bold">
                     {link.label}
-                  </motion.a>
+                  </Link>
+                ) : (
+                  <a key={link.href} href={link.href} className="text-2xl font-bold">
+                    {link.label}
+                  </a>
+                )
+              )}
 
-                  {/* Dropdown mobile */}
-                  {link.dropdown && (
-                    <div className="mt-2 flex flex-col gap-2">
-                      {link.dropdown.map((item, j) => (
-                        <a
-                          key={j}
-                          href={item.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="text-gray-300 text-lg"
-                        >
-                          {item.label}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-
-                </div>
-              ))}
-
-              <motion.a
+              {/* CTA */}
+              <a
                 href="#contact"
-                onClick={() => setMobileOpen(false)}
-                className="mt-4 bg-accent text-accent-foreground px-8 py-3 rounded-full text-lg font-bold"
+                className="bg-white text-[#727f2d] px-8 py-4 rounded-full font-bold"
               >
                 Devis Gratuit
-              </motion.a>
-
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
-  );
-}
-
-function KleanZLogo({ dark }) {
-  return (
-    <img
-      src={logo}
-      alt="kleanZ"
-      className={`h-20 w-auto transition ${
-        dark ? "" : "brightness-0 invert"
-      }`}
-    />
   );
 }
