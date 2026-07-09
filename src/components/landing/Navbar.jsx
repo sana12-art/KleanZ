@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const navLinks = [
   { label: 'Accueil', href: '#hero' },
@@ -23,8 +23,21 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const mainColor = '#727f2d';
+
+  const goHome = (e) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    if (location.pathname === '/') {
+      const el = document.querySelector('#hero');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+    }
+  };
 
   return (
     <>
@@ -36,7 +49,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-24">
 
           {/* LOGO */}
-          <a href="#hero" className="flex items-center">
+          <a href="#hero" onClick={goHome} className="flex items-center">
             <img
               src="https://media.base44.com/images/public/69e63cfe37163cac729de2ea/99044bf05_Capture_d_cran_2026-05-18_104616-removebg-preview.png"
               alt="logo"
@@ -86,7 +99,12 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ) : (
-                <a key={link.href} href={link.href} className="font-semibold">
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={link.href === '#hero' ? goHome : undefined}
+                  className="font-semibold"
+                >
                   {link.label}
                 </a>
               )
@@ -156,7 +174,12 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ) : (
-                  <a key={link.href} href={link.href} className="text-2xl font-bold">
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={link.href === '#hero' ? goHome : undefined}
+                    className="text-2xl font-bold"
+                  >
                     {link.label}
                   </a>
                 )
