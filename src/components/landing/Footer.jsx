@@ -29,7 +29,7 @@ export default function Footer() {
             <img
               src="https://media.base44.com/images/public/69e63cfe37163cac729de2ea/99044bf05_Capture_d_cran_2026-05-18_104616-removebg-preview.png"
               alt="KleanZ"
-              className="h-16 w-auto"
+              className="h-24 w-auto"
             />
             <p className="text-primary-foreground/70 mt-4 leading-relaxed font-body text-sm max-w-xs">
               Entreprise familiale de nettoyage professionnel. Depuis 2018, nous prenons soin 
